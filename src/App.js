@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import Login from "./comp/Login";
+import Register from "./comp/Register";
+import Main from "./comp/Main";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useState } from "react";
+import Addflight from "./comp/Addflight";
+import Update from "./comp/Update";
+import Chart from "./comp/Chart";
+export default function App() {
+  const [logged, setlogged] = useState([]);
+  const [fList, setfList] = useState([])
+  const logdata = (data) => {
+    setlogged(data);
+  };
+  const allList = (all) => {
+    setfList(all)
+  }
 
-function App() {
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="all">
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate replace to={"/login"}></Navigate>}
+          />
+          <Route path="/login" element={<Login logdata={logdata} />} />
+          <Route path="/main" element={<Main fList={fList} allList={allList}/>} />
+          <Route path="/add" element={<Addflight fList={fList}/>} />
+          <Route path="/update" element={<Update fList={fList}/>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/chart" element={<Chart fList={fList} />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
-
-export default App;
